@@ -1,0 +1,12 @@
+/* css */
+.disable{
+	pointer-events: none;
+	cursor: not-allowed;
+}
+
+fieldset#geonode-scopes div.fieldset-wrapper {
+	display: flex;
+}
+fieldset#geonode-scopes div.fieldset-wrapper div.field--type-boolean {
+    flex-basis: 25%;
+}

@@ -1,0 +1,171 @@
+<?php
+
+use \Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Element;
+use \Drupal\Core\Ajax\AjaxResponse;
+use \Drupal\Core\Ajax\PrependCommand;
+use \Drupal\Core\Ajax\ReplaceCommand;
+use \Drupal\node\Entity\Node;
+use \Drupal\views\ViewExecutable;
+
+function biopama_form_hooks_form_alter(&$form, FormStateInterface $form_state, $form_id)
+{
+	switch ($form_id) {
+		case 'node_policy_form':
+			$form['actions']['submit']['#ajax'] = array('callback' => 'biopamaFormSubmitPolicy');
+			$form['messages']['status'] = ['#type' => 'status_messages'];
+			break;
+		case 'node_goal_target_form':
+			$form['actions']['submit']['#ajax'] = array('callback' => 'biopamaFormSubmitTarget');
+			$form['messages']['status'] = ['#type' => 'status_messages'];
+			break;
+		case 'node_indicator_form':
+			$form['#attached']['library'][] = 'biopama_form_hooks/geonode';
+			$form['#attached']['library'][] = 'biopama_form_hooks/indicator-edit';
+			$form['actions']['submit']['#ajax'] = array('callback' => 'biopamaFormSubmitIndicator');
+			$form['messages']['status'] = ['#type' => 'status_messages'];
+			break;
+		case 'node_policy_edit_form':
+		case 'node_goal_target_edit_form':
+		case 'node_indicator_edit_form':
+			if ($form_id == 'node_indicator_edit_form'){
+				$form['#attached']['library'][] = 'biopama_form_hooks/geonode';
+				$form['#attached']['library'][] = 'biopama_form_hooks/indicator-edit';
+			}
+			$form['actions']['submit']['#ajax'] = array('callback' => 'biopamaFormEditNode');
+			$form['messages']['status'] = ['#type' => 'status_messages',];
+			break;
+		case 'node_data_form':
+		case 'node_data_edit_form':
+			$form['#attached']['library'][] = 'biopama_form_hooks/data-edit';
+			break;
+		case 'node_wms_map_layer_form':
+		case 'node_wms_map_layer_edit_form':
+		case 'entity_browser_map_layer_browser_form':
+			$form['#attached']['library'][] = 'biopama_form_hooks/wms-edit';
+			break;
+		case 'node_priority_action_form':
+		case 'node_priority_action_edit_form':
+			$form['actions']['submit']['#ajax'] = array('callback' => 'biopamaFormSubmitPriority');
+			$form['messages']['status'] = ['#type' => 'status_messages'];
+			break;
+		case 'node_management_assessment_justificat_form':
+		case 'node_management_assessment_justificat_edit_form':
+			$form['actions']['submit']['#ajax'] = array('callback' => 'biopamaFormSubmitDoc');
+			$form['messages']['status'] = ['#type' => 'status_messages'];
+			break;
+		default:
+			break;
+	}
+}
+
+function biopamaFormSubmitPolicy($form, FormStateInterface $form_state) {
+	// Instantiate an AjaxResponse Object to return.
+	$ajax_response = new AjaxResponse();
+	$status_messages = array('#type' => 'status_messages');
+	$messages = \Drupal::service('renderer')->renderRoot($status_messages);
+	//\Drupal::logger('biopama_form_hooks')->notice("something happened.");
+
+    // If there are any form errors, re-display the form.
+    if ($form_state->hasAnyErrors()) {
+      $ajax_response->addCommand(new PrependCommand('.layout-region-node-footer', $messages));
+    }
+    else {
+      $ajax_response->addCommand(new ReplaceCommand('.layout-region-node-footer', $messages.'<a href="node/add/policy" class="use-ajax add-policy" data-dialog-type="dialog" data-dialog-renderer="off_canvas" data-dialog-options="{&quot;width&quot;:400}">Policy added! Click here to add another policy</a>'));
+    }
+	return $ajax_response;
+}
+function biopamaFormSubmitTarget($form, FormStateInterface $form_state) {
+	// Instantiate an AjaxResponse Object to return.
+	$ajax_response = new AjaxResponse();
+	$status_messages = array('#type' => 'status_messages');
+	$messages = \Drupal::service('renderer')->renderRoot($status_messages);
+	//\Drupal::logger('biopama_form_hooks')->notice("something happened.");
+
+    // If there are any form errors, re-display the form.
+    if ($form_state->hasAnyErrors()) {
+      $ajax_response->addCommand(new PrependCommand('.layout-region-node-footer', $messages));
+    }
+    else {
+      $ajax_response->addCommand(new ReplaceCommand('.layout-region-node-footer', $messages.'<a href="node/add/goal_target" class="use-ajax add-target" data-dialog-type="dialog" data-dialog-renderer="off_canvas" data-dialog-options="{&quot;width&quot;:400}">Target added! Click here to add another target</a>'));
+    }
+	return $ajax_response;
+}
+
+function biopamaFormSubmitPriority($form, FormStateInterface $form_state) {
+	// Instantiate an AjaxResponse Object to return.
+	$ajax_response = new AjaxResponse();
+	$status_messages = array('#type' => 'status_messages');
+	$messages = \Drupal::service('renderer')->renderRoot($status_messages);
+	//\Drupal::logger('biopama_form_hooks')->notice("something happened.");
+
+    // If there are any form errors, re-display the form.
+    if ($form_state->hasAnyErrors()) {
+      $ajax_response->addCommand(new PrependCommand('.layout-region-node-footer', $messages));
+    }
+    else {
+      $ajax_response->addCommand(new ReplaceCommand('.layout-region-node-footer', $messages.'<a href="node/add/priority_action" class="use-ajax add-target" data-dialog-type="dialog" data-dialog-renderer="off_canvas" data-dialog-options="{&quot;width&quot;:400}">Priority added! Click here to add another Priority</a>'));
+    }
+	return $ajax_response;
+}
+
+function biopamaFormSubmitDoc($form, FormStateInterface $form_state) {
+	// Instantiate an AjaxResponse Object to return.
+	$ajax_response = new AjaxResponse();
+	$status_messages = array('#type' => 'status_messages');
+	$messages = \Drupal::service('renderer')->renderRoot($status_messages);
+	//\Drupal::logger('biopama_form_hooks')->notice("something happened.");
+
+    // If there are any form errors, re-display the form.
+    if ($form_state->hasAnyErrors()) {
+      $ajax_response->addCommand(new PrependCommand('.layout-region-node-footer', $messages));
+    }
+    else {
+      $ajax_response->addCommand(new ReplaceCommand('.layout-region-node-footer', $messages.'Document added!'));
+    }
+	return $ajax_response;
+}
+
+function biopamaFormSubmitIndicator($form, FormStateInterface $form_state) {
+	// Instantiate an AjaxResponse Object to return.
+	$ajax_response = new AjaxResponse();
+	$status_messages = array('#type' => 'status_messages');
+	$messages = \Drupal::service('renderer')->renderRoot($status_messages);
+	//\Drupal::logger('biopama_form_hooks')->notice("something happened.");
+
+    // If there are any form errors, re-display the form.
+    if ($form_state->hasAnyErrors()) {
+      $ajax_response->addCommand(new PrependCommand('.layout-region-node-footer', $messages));
+    }
+    else {
+      $ajax_response->addCommand(new ReplaceCommand('.layout-region-node-footer', $messages.'<a href="node/add/goal_target" class="use-ajax add-indicator" data-dialog-type="dialog" data-dialog-renderer="off_canvas" data-dialog-options="{&quot;width&quot;:400}">Indicator added! Click here to add another indicator</a>'));
+    } 
+	return $ajax_response;
+}
+function biopamaFormEditNode($form, FormStateInterface $form_state) {
+	// Instantiate an AjaxResponse Object to return.
+	$ajax_response = new AjaxResponse();
+	$status_messages = array('#type' => 'status_messages');
+	$messages = \Drupal::service('renderer')->renderRoot($status_messages);
+	$ajax_response->addCommand(new PrependCommand('.layout-region-node-footer', $messages));
+	return $ajax_response;
+}
+/* function biopama_form_hooks_views_pre_render(ViewExecutable $view) {
+	//dsm($display_id);
+	if (isset($view) && ($view->storage->id() == 'country_indicators_by_sc')) {
+		$view->element['#attached']['library'][] = 'bootstrap_barrio_biopama/indicator-country-chart';
+	}
+} */
+
+/**
+ * Implement hook_views_ajax_data_alter().
+ */
+/* function biopama_form_hooks_views_ajax_data_alter(&$commands, $view) {
+  // Remove scroll to top behaviour from views ajax
+  foreach ($commands as $key => $command) {
+    if ($command['command'] == 'viewsScrollTop') {
+      unset($commands[$key]);
+      break;
+    }
+  }
+} */

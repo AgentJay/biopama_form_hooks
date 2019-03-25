@@ -1,0 +1,35 @@
+geonode:
+  css:
+    theme:
+      css/geonode.css: {}
+  js:
+    js/geonode.js: {minified: false, preprocess: false}
+  dependencies:
+    - core/jquery
+
+indicator-edit:
+  css:
+    theme:
+      css/indicator_edit.css: {}
+  js:
+    js/indicator_edit.js: {minified: false, preprocess: false}
+  dependencies:
+    - core/jquery
+    
+data-edit:
+  css:
+    theme:
+      css/data_edit.css: {}
+  js:
+    js/data_edit.js: {minified: false, preprocess: false}
+  dependencies:
+    - core/jquery
+    
+wms-edit:
+  css:
+    theme:
+      css/wms_edit.css: {}
+  js:
+    js/wms_edit.js: {minified: false, preprocess: false}
+  dependencies:
+    - core/jquery
