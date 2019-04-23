@@ -42,7 +42,7 @@ jQuery(document).ready(function($) {
 				$( '<div class="alert alert-danger" role="alert">The URL requires HTTPS</div>' ).appendTo( "div.wms-errors" );
 				$(".wms-service-search").addClass("disabled");
 				URLerrors = 1;
-			}
+			} 
 			if((wmsURL.indexOf("ows") == -1)&&(wmsURL.indexOf("wms") == -1)) {
 				$( '<div class="alert alert-danger" role="alert">The URL does not appear to include a WMS or OWS service</div>' ).appendTo( "div.wms-errors" );
 				$(".wms-service-search").addClass("disabled");
@@ -76,23 +76,24 @@ jQuery(document).ready(function($) {
 			dataType: "xml",
 			success: xmlParser,
 			error: function (jqXHR, tranStatus, errorThrown) {
-				console.log(
-					'Status: ' + jqXHR.status + ' ' + jqXHR.statusText + '. ' +
-					'Response: ' + jqXHR.responseText
-				); 
+				$("div.wms-errors").html('<div class="alert alert-danger" role="alert">Status: ' + jqXHR.status + ' ' + jqXHR.statusText + '. ' +
+					'Response: ' + jqXHR.responseText + '</div>');
+				console.log(jqXHR);
 			}
 		});
 		
 	}
 	function xmlParser(xml) {
+		$("div.wms-errors").empty();
 		//start by adding the dropdown to the form if it wasn't already there from a previous run
 		if (!$("#wms-layers").length){
-			$( '<div id="wms-layers">WMS Layers: <select id="wms-dropdown" name="WMS Layers"></select></div>' ).appendTo( "fieldset.form-item-field-wms-base-url-0-value" );
-			$( '<div id="wms-layer-atts">Layer Fields: <select id="wms-atts-dropdown" name="Layer Attributes"></select></div>' ).appendTo( "fieldset.form-item-field-wms-base-url-0-value" );
-			$('#wms-layer-atts').hide();
+			if ($(".form-item-inline-entity-form-field-wms-base-url-0-value").length){
+				$( '<div id="wms-layers">WMS Layers: <select id="wms-dropdown" name="WMS Layers"></select></div>' ).appendTo( ".form-item-inline-entity-form-field-wms-base-url-0-value" );
+			} else if ($("fieldset.form-item-field-wms-base-url-0-value").length){
+				$( '<div id="wms-layers">WMS Layers: <select id="wms-dropdown" name="WMS Layers"></select></div>' ).appendTo( "fieldset.form-item-field-wms-base-url-0-value" );
+			}
 		}
 		var dropdown = $('select#wms-dropdown');
-		dropdownAtts = $('select#wms-atts-dropdown');
 		dropdown.empty()
 
 		var $Layers = $(xml).find("Layer");
@@ -104,33 +105,17 @@ jQuery(document).ready(function($) {
 		
 		dropdown.change(function() {
 			var layerName = $( this ).val();
-			$( "#wms-dropdown option:selected" ).each(function() {
-				var wmsLayerAttributesURL = wmsURL + 'version=1.3.0&request=describeFeatureType&outputFormat=application/json&service=WFS&typeNames=' + layerName;
-				$.ajax({
-					url: wmsLayerAttributesURL,
-					crossDomain: true,
-					success: jsonParser,
-					error: function (jqXHR, tranStatus, errorThrown) {
-						dropdownAtts.empty().show().append('<option selected="true" disabled>This one is a raster, try selecting another layer.</option>');
-						console.log(
-							'Status: ' + jqXHR.status + ' ' + jqXHR.statusText + '. ' +
-							'Response: ' + jqXHR.responseText
-						); 
-					}
-				});
-			});
+			if ($("input[data-drupal-selector=edit-inline-entity-form-field-wms-layer-name-0-value]").length){
+				$("input[data-drupal-selector=edit-inline-entity-form-field-wms-layer-name-0-value]").val(layerName);
+			} else if ($("input[data-drupal-selector=edit-field-wms-layer-name-0-value]").length) {
+				$("input[data-drupal-selector=edit-field-wms-layer-name-0-value]").val(layerName);
+			}
 		});
 	}
-	function jsonParser(d) {
-		$('#wms-layer-atts').show()
-		dropdownAtts.empty().append('<option selected="true" disabled>Select an Attribute</option>');
-		$(d.featureTypes[0].properties).each(function(i, data) {
-			dropdownAtts.append($('<option></option>').text(d.featureTypes[0].properties[i].name + ' | ' + d.featureTypes[0].properties[i].type));
-		}); 
-	}
+
 });
 
-$(function () {
+jQuery(function () {
   Drupal.attachBehaviors(document, Drupal.settings);
 });
 

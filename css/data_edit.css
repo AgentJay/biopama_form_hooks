@@ -1,1 +1,18 @@
 /* css */
+select.chosen-select {
+    display: none;
+}
+
+form.node-data-edit-form {
+    max-height: 500px !important;
+}
+
+div#wms-errors {
+    position: absolute;
+    left: 25px;
+    bottom: 50px;
+}
+
+.entities-list .item-container {
+    color: #679b95;
+}

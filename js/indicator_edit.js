@@ -2,21 +2,20 @@ jQuery(document).ready(function($) {
 	var dropdown;
 	var dropdownAtts;
 	//this will clean the form the first time we load the JS
-	indicatorEdit();
+	//indicatorEdit();
 	//the behavior below will clean the form each time it's loaded after the initial load.
 	Drupal.behaviors.indicatorEditPrep = {
 		attach:function(context, settings){
-			if ($("div#drupal-off-canvas form.node-indicator-edit-form").length){
+/* 			if ($("div#drupal-off-canvas form.node-indicator-edit-form").length){
 				indicatorEdit();
 			}
 			if ($("div#drupal-off-canvas form.node-indicator-form").length){
 				indicatorEdit();
-			}
+			} */
 		}
 	};
 	
 	function indicatorEdit(){
-		console.log("test")
 		//hide all the fields that are not checked. they will be shown later if needed
 		checkFieldVisibility();
 		//permanently disable the geonode layer field as this will only be for tracking
@@ -31,17 +30,6 @@ jQuery(document).ready(function($) {
 		$('.form-item-field-indi-response-value input').click(function() {
 			checkFieldVisibility();
 		});
-		
-		$("fieldset.form-item-field-indi-get-data-from select").change(function() {
-			checkFieldVisibility();
-			if ($( this ).val() == "BIOPAMA Geonode"){
-				getGeonodeStuff();
-			} else {
-				//destroy geonode stuff if it exsists
-				if ($("div#geonode-layer-wrapper").length) $("div#geonode-layer-wrapper").remove();
-				
-			}
-		})
 	}
 	
 	function checkFieldVisibility(){
@@ -60,35 +48,9 @@ jQuery(document).ready(function($) {
 		} else {
 			$(".field--name-field-reference-policy").show();
 		}
-		
-		if ($("fieldset.form-item-field-indi-get-data-from select").val() == "BIOPAMA Geonode"){
-			$('fieldset#geonode-settings-wrapper').show();
-			$('fieldset#rest-settings-wrapper').hide();
-		} else if ($("fieldset.form-item-field-indi-get-data-from select").val() == "REST"){
-			$('fieldset#rest-settings-wrapper').show();
-			$('fieldset#geonode-settings-wrapper').hide();
-		} else {
-			$('fieldset#geonode-settings-wrapper').hide();
-			$('fieldset#rest-settings-wrapper').hide();
-		}
-/* 		if (!$('.field--name-field-indi-scope-global input').prop('checked')){
-			$("#global-geonode-wrapper").hide(); 
-		} else {
-			$("#global-geonode-wrapper").show(); 
-		}
-		if (!$('.field--name-field-indi-scope-regional input').prop('checked')){
-			$("#regional-geonode-wrapper").hide(); 
-		}
-		if (!$('.field--name-field-indi-scope-country input').prop('checked')){
-			$("#country-geonode-wrapper").hide(); 
-		}
-		if (!$('.field--name-field-indi-scope-pa input').prop('checked')){
-			$("#local-geonode-wrapper").hide(); 
-		} */
-
 	}
 	
-	function getGeonodeStuff(){
+/* 	function getGeonodeStuff(){
 		$( '<div id="geonode-layer-wrapper"><div id="geonode-layers">GeoNode Layers: <select id="geonode-dropdown" name="Geonode Layers"></select></div>'+
 		'<div id="geonode-attributes">Layer attributes<select id="geonode-layer-atts" name="Layer Attributes"></select></div></div>' ).insertAfter( "fieldset.form-item-field-indi-get-data-from" );
 		dropdown = $('#geonode-dropdown');
@@ -144,7 +106,7 @@ jQuery(document).ready(function($) {
 			}); 
 
 		}
-	};
+	}; */
 });
 
 

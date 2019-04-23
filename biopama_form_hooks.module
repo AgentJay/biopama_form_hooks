@@ -10,6 +10,7 @@ use \Drupal\views\ViewExecutable;
 
 function biopama_form_hooks_form_alter(&$form, FormStateInterface $form_state, $form_id)
 {
+	//\Drupal::logger('biopama_form_hooks')->notice("form ID:".$form_id);
 	switch ($form_id) {
 		case 'node_policy_form':
 			$form['actions']['submit']['#ajax'] = array('callback' => 'biopamaFormSubmitPolicy');
@@ -29,7 +30,6 @@ function biopama_form_hooks_form_alter(&$form, FormStateInterface $form_state, $
 		case 'node_goal_target_edit_form':
 		case 'node_indicator_edit_form':
 			if ($form_id == 'node_indicator_edit_form'){
-				$form['#attached']['library'][] = 'biopama_form_hooks/geonode';
 				$form['#attached']['library'][] = 'biopama_form_hooks/indicator-edit';
 			}
 			$form['actions']['submit']['#ajax'] = array('callback' => 'biopamaFormEditNode');
@@ -37,6 +37,10 @@ function biopama_form_hooks_form_alter(&$form, FormStateInterface $form_state, $
 			break;
 		case 'node_data_form':
 		case 'node_data_edit_form':
+		case 'entity_browser_data_global_browser_form':
+		case 'entity_browser_data_local_browser_form':
+		case 'entity_browser_data_national_browser_form':
+		case 'entity_browser_data_regional_browser_form':
 			$form['#attached']['library'][] = 'biopama_form_hooks/data-edit';
 			break;
 		case 'node_wms_map_layer_form':

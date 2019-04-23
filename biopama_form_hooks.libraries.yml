@@ -1,12 +1,3 @@
-geonode:
-  css:
-    theme:
-      css/geonode.css: {}
-  js:
-    js/geonode.js: {minified: false, preprocess: false}
-  dependencies:
-    - core/jquery
-
 indicator-edit:
   css:
     theme:
