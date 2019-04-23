@@ -5,7 +5,6 @@ select.chosen-select {
 
 form.node-data-edit-form {
     max-height: 500px !important;
-	height: 500px;
 }
 
 div#wms-errors {
