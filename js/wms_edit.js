@@ -20,7 +20,7 @@ jQuery(document).ready(function($) {
 	};
 	$( "button.wms-service-search" ).click(function() {
 		if ($(this).hasClass("disabled")) {
-			console.log("it's not available dummy");
+			console.log("it's not available");
 		} else {
 			checkWmsServices();
 		}
