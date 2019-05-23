@@ -98,17 +98,22 @@ jQuery(document).ready(function($) {
 
 		var $Layers = $(xml).find("Layer");
 		$Layers.each(function(){
-			var thisTitle = $(this).find("Title:first").text()
-			//console.log(thisTitle);
-			dropdown.append($('<option></option>').attr('value', thisTitle).text(thisTitle));
+			var thisTitle = $(this).find("Title:first").text();
+			var thisLayer = $(this).find("Name:first").text();
+			var thisLegend = $(this).find("Style > LegendURL > OnlineResource").attr("xlink:href");
+			console.log(this);
+			dropdown.append($('<option></option>').attr('value', thisLegend).attr('layer', thisLayer).text(thisTitle));
 		});
 		
 		dropdown.change(function() {
-			var layerName = $( this ).val();
+			var layerName = $(this).find('option:selected').attr("layer");
+			var layerLegend = $( this ).val();
 			if ($("input[data-drupal-selector=edit-inline-entity-form-field-wms-layer-name-0-value]").length){
 				$("input[data-drupal-selector=edit-inline-entity-form-field-wms-layer-name-0-value]").val(layerName);
+				$("input[data-drupal-selector=edit-inline-entity-form-field-layer-wms-legend-0-value]").val(layerLegend);
 			} else if ($("input[data-drupal-selector=edit-field-wms-layer-name-0-value]").length) {
 				$("input[data-drupal-selector=edit-field-wms-layer-name-0-value]").val(layerName);
+				$("input[data-drupal-selector=edit-field-layer-wms-legend-0-value]").val(layerLegend);
 			}
 		});
 	}
