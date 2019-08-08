@@ -10,6 +10,7 @@ use \Drupal\views\ViewExecutable;
 
 function biopama_form_hooks_form_alter(&$form, FormStateInterface $form_state, $form_id)
 {
+	$form['#attached']['library'][] = 'biopama_form_hooks/form-style';
 	//\Drupal::logger('biopama_form_hooks')->notice("form ID:".$form_id);
 	switch ($form_id) {
 		case 'node_policy_form':
@@ -24,6 +25,13 @@ function biopama_form_hooks_form_alter(&$form, FormStateInterface $form_state, $
 			$form['#attached']['library'][] = 'biopama_form_hooks/geonode';
 			$form['#attached']['library'][] = 'biopama_form_hooks/indicator-edit';
 			$form['actions']['submit']['#ajax'] = array('callback' => 'biopamaFormSubmitIndicator');
+			$form['messages']['status'] = ['#type' => 'status_messages'];
+			break;
+		case 'node_indicator_data_glo_form':
+		case 'node_indicator_data_regional_form':
+		case 'node_indicator_data_country_form':
+		case 'node_indicator_data_local_form': 
+			$form['actions']['submit']['#ajax'] = array('callback' => 'biopamaFormSubmitIndicatorData');
 			$form['messages']['status'] = ['#type' => 'status_messages'];
 			break;
 		case 'node_policy_edit_form':
@@ -143,6 +151,21 @@ function biopamaFormSubmitIndicator($form, FormStateInterface $form_state) {
     }
     else {
       $ajax_response->addCommand(new ReplaceCommand('.layout-region-node-footer', $messages.'<a href="node/add/goal_target" class="use-ajax add-indicator" data-dialog-type="dialog" data-dialog-renderer="off_canvas" data-dialog-options="{&quot;width&quot;:400}">Indicator added! Click here to add another indicator</a>'));
+    } 
+	return $ajax_response;
+}
+function biopamaFormSubmitIndicatorData($form, FormStateInterface $form_state) {
+	// Instantiate an AjaxResponse Object to return.
+	$ajax_response = new AjaxResponse();
+	$status_messages = array('#type' => 'status_messages');
+	$messages = \Drupal::service('renderer')->renderRoot($status_messages);
+	//\Drupal::logger('biopama_form_hooks')->notice("something happened.");
+
+    // If there are any form errors, re-display the form.
+    if ($form_state->hasAnyErrors()) {
+      $ajax_response->addCommand(new PrependCommand('.layout-region-node-footer', $messages));
+    } {
+      $ajax_response->addCommand(new ReplaceCommand('.layout-region-node-footer', $messages.'<div aria-label="Status message" class="data-updated alert alert-dismissible fade show col-12 alert-success" role="status">Data updated!</div>'));
     } 
 	return $ajax_response;
 }

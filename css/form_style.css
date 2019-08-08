@@ -1,0 +1,4 @@
+/* Contact Form */
+.ui-dialog-buttonset button.form-submit:nth-child(2){
+	display: none;
+}

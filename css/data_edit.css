@@ -5,14 +5,31 @@ select.chosen-select {
 
 form.node-data-edit-form {
     max-height: 500px !important;
+	overflow: auto;
+    overflow-x: hidden;	
 }
 
 div#wms-errors {
-    position: absolute;
-    left: 25px;
-    bottom: 50px;
+    margin: 0px;
 }
 
 .entities-list .item-container {
     color: #679b95;
+}
+
+.ramp {padding: 4px;}
+.ramp.selected {background: #95da2b;}
+
+div#ramps-diverging, div#ramps-sequential,
+div#edit-ramps-diverging, div#edit-ramps-sequential {
+    display: flex;
+	flex-wrap: wrap;
+}
+
+div.field--name-field-data-color-swatch{
+	display: none;
+}
+
+div#google-sheets-results-wrapper {
+    overflow: auto;
 }
