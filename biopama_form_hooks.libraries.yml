@@ -24,3 +24,8 @@ wms-edit:
     js/wms_edit.js: {minified: false, preprocess: false}
   dependencies:
     - core/jquery
+    
+form-style:
+  css:
+    theme:
+      css/form_style.css: {}
