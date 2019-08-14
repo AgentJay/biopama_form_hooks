@@ -1,9 +1,9 @@
-indicator-edit:
+policy-edit:
   css:
     theme:
-      css/indicator_edit.css: {}
+      css/policy_edit.css: {}
   js:
-    js/indicator_edit.js: {minified: false, preprocess: false}
+    js/policy_edit.js: {minified: false, preprocess: false}
   dependencies:
     - core/jquery
     
