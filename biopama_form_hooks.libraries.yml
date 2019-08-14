@@ -15,6 +15,7 @@ data-edit:
     js/data_edit.js: {minified: false, preprocess: false}
   dependencies:
     - core/jquery
+    - biopama_form_hooks/datatables
     
 wms-edit:
   css:
@@ -28,4 +29,18 @@ wms-edit:
 form-style:
   css:
     theme:
+<<<<<<< HEAD
       css/form_style.css: {}
+=======
+      css/form_style.css: {}
+      
+datatables:
+  css:
+    theme:
+      /libraries/datatables/datatables.min.css: {}
+
+  js:
+    /libraries/datatables/datatables.min.js: {minified: true, preprocess: false}
+  dependencies:
+    - core/jquery
+>>>>>>> 4c25da52d640f5f57c1533efae233d8f81d49ebc

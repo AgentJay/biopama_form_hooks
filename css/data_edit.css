@@ -28,4 +28,11 @@ div#edit-ramps-diverging, div#edit-ramps-sequential {
 
 div.field--name-field-data-color-swatch{
 	display: none;
+<<<<<<< HEAD
+=======
+}
+
+div#google-sheets-results-wrapper {
+    overflow: auto;
+>>>>>>> 4c25da52d640f5f57c1533efae233d8f81d49ebc
 }
