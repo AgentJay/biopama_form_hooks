@@ -10,7 +10,10 @@ jQuery(document).ready(function($) {
 	var dropdown;
 	var dropdownAtts;
 	var strippedWMS;
+<<<<<<< HEAD
+=======
 	var table;
+>>>>>>> 4c25da52d640f5f57c1533efae233d8f81d49ebc
 	var colorbrewer = { 
 		diverging: {
 			1:  {2: ['rgb(252,141,89)', 'rgb(153,213,148)'], 3: ['rgb(252,141,89)', 'rgb(255,255,191)', 'rgb(153,213,148)'], 4: ['rgb(215,25,28)', 'rgb(253,174,97)', 'rgb(171,221,164)', 'rgb(43,131,186)'], 5: ['rgb(215,25,28)', 'rgb(253,174,97)', 'rgb(255,255,191)', 'rgb(171,221,164)', 'rgb(43,131,186)'], 6: ['rgb(213,62,79)', 'rgb(252,141,89)', 'rgb(254,224,139)', 'rgb(230,245,152)', 'rgb(153,213,148)', 'rgb(50,136,189)'], 7: ['rgb(213,62,79)', 'rgb(252,141,89)', 'rgb(254,224,139)', 'rgb(255,255,191)', 'rgb(230,245,152)', 'rgb(153,213,148)', 'rgb(50,136,189)'], 8: ['rgb(213,62,79)', 'rgb(244,109,67)', 'rgb(253,174,97)', 'rgb(254,224,139)', 'rgb(230,245,152)', 'rgb(171,221,164)', 'rgb(102,194,165)', 'rgb(50,136,189)'], 9: ['rgb(213,62,79)', 'rgb(244,109,67)', 'rgb(253,174,97)', 'rgb(254,224,139)', 'rgb(255,255,191)', 'rgb(230,245,152)', 'rgb(171,221,164)', 'rgb(102,194,165)', 'rgb(50,136,189)']} ,
@@ -130,11 +133,16 @@ jQuery(document).ready(function($) {
 					break;
 				case 'Google Sheets':
 					$("fieldset.sheets-settings-wrapper").show();
+<<<<<<< HEAD
+=======
 					buildSheetsForm();
+>>>>>>> 4c25da52d640f5f57c1533efae233d8f81d49ebc
 					break;
 				default:
 					$("fieldset.data-settings-wrapper").hide();
 			}
+<<<<<<< HEAD
+=======
 			function buildSheetsForm(){
 				if (!$("div#google-sheets-wrapper").length){
 					$('<div id="google-sheets-wrapper"><button type="button" class="btn btn-primary sheets-search disabled">Check Sheet</button><div id="google-sheets-results-wrapper"><table id="google-sheets-results" class="display" width="100%"></table></div></div>').appendTo("fieldset.form-item-field-data-sheet-range-0-value");
@@ -196,6 +204,7 @@ jQuery(document).ready(function($) {
 					});
 				});
 			}
+>>>>>>> 4c25da52d640f5f57c1533efae233d8f81d49ebc
 			function buildExternalForm(){
 				if (!$("div.wms-search-wrapper").length){
 					/*

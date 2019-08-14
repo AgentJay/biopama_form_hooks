@@ -29,6 +29,9 @@ wms-edit:
 form-style:
   css:
     theme:
+<<<<<<< HEAD
+      css/form_style.css: {}
+=======
       css/form_style.css: {}
       
 datatables:
@@ -40,3 +43,4 @@ datatables:
     /libraries/datatables/datatables.min.js: {minified: true, preprocess: false}
   dependencies:
     - core/jquery
+>>>>>>> 4c25da52d640f5f57c1533efae233d8f81d49ebc
