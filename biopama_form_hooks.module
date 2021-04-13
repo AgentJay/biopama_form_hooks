@@ -31,7 +31,8 @@ function biopama_form_hooks_form_alter(&$form, FormStateInterface $form_state, $
 		case 'node_indicator_data_glo_form':
 		case 'node_indicator_data_regional_form':
 		case 'node_indicator_data_country_form':
-		case 'node_indicator_data_local_form': 
+		case 'node_indicator_data_local_form':
+		case 'node_indicator_edit_form':
 			$form['actions']['submit']['#ajax'] = array('callback' => 'biopamaFormSubmitIndicatorData');
 			$form['messages']['status'] = ['#type' => 'status_messages'];
 			break;

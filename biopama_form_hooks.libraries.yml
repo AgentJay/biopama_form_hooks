@@ -5,6 +5,7 @@ policy-edit:
   js:
     js/policy_edit.js: {minified: false, preprocess: false}
   dependencies:
+    - core/drupal
     - core/jquery
     
 data-edit:
@@ -14,6 +15,7 @@ data-edit:
   js:
     js/data_edit.js: {minified: false, preprocess: false}
   dependencies:
+    - core/drupal
     - core/jquery
     - biopama_form_hooks/datatables
     
@@ -24,6 +26,7 @@ wms-edit:
   js:
     js/wms_edit.js: {minified: false, preprocess: false}
   dependencies:
+    - core/drupal
     - core/jquery
     
 form-style:
@@ -39,4 +42,5 @@ datatables:
   js:
     /libraries/datatables/datatables.min.js: {minified: true, preprocess: false}
   dependencies:
+    - core/drupal
     - core/jquery
