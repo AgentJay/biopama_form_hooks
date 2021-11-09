@@ -210,7 +210,7 @@ jQuery(document).ready(function($) {
 					'<div id="wms-layer-atts-wrapper">' +
 					'<div id="wms-layer-atts">Layer Attributes: <select id="wms-atts" multiple class="chosen-select" data-placeholder="Choose layer Attributes" name="Layer Attributes"></select></div>' +
 					'</div>' +
-					'</div>' ).appendTo( "fieldset.form-item-field-wms-base-url-0-value, div#edit-inline-entity-form-field-wms-base-url-wrapper" );
+					'</div>' ).appendTo( "fieldset.wms-settings-wrapper, div#edit-inline-entity-form-field-wms-base-url-wrapper" );
 					dropdownWMS = $('select#wms-dropdown');
 					dropdownWMSAtts = $('select#wms-atts');
 					dropdownWMS.hide();
@@ -280,7 +280,8 @@ jQuery(document).ready(function($) {
 					$( "#geonode-dropdown option:selected" ).each(function() {
 						$.ajax({
 							url: 'https://geonode-rris.biopama.org/geoserver/ows?version=1.3.0&request=describeFeatureType&outputFormat=application/json&service=WFS&typeNames='+layerName,
-							crossDomain: true,
+							//crossDomain: true,
+							dataType: "jsonp",
 							success: jsonParser,
 							error: function (jqXHR, tranStatus, errorThrown) {
 								dropdownAtts.empty().show().append('<option selected="true" disabled>This one is a raster, try selecting another layer.</option>');
@@ -357,7 +358,8 @@ jQuery(document).ready(function($) {
 		var $Layers = $(xml).find("Layer");
 		$Layers.each(function(){
 			var thisTitle = $(this).find("Title:first").text()
-			dropdownWMS.append($('<option></option>').attr('value', thisTitle).text(thisTitle)).trigger("chosen:updated");
+			var thisName = $(this).find("Name:first").text()
+			dropdownWMS.append($('<option></option>').attr('value', thisName).text(thisTitle)).trigger("chosen:updated");
 		});
 
 		dropdownWMS.chosen().change(function(e, params){
@@ -366,10 +368,13 @@ jQuery(document).ready(function($) {
 			//the first thing to test is if the selected layer supports WFS. We do this by trying a WFS request.
 			//to do the request we construct the WFS URL
 			strippedWMS = wmsURL.match(/^.*geoserver\//g);
-			var finishedWMSURLtest = encodeURI(strippedWMS + workspace + "/ows?service=wfs&version=1.1.0&request=getfeature&MAXFEATURES=1&typename=" + workspace+ ":" + layerName + "&PROPERTYNAME=,"+"&outputFormat=application/json");
+			strippedWMS = strippedWMS[0].trim();
+			var encodedURL = encodeURI(strippedWMS + workspace + "/ows?service=wfs&version=1.1.0&request=getfeature&MAXFEATURES=1&typename=" + workspace+ ":" + layerName + "&PROPERTYNAME=,"+"&outputFormat=application/json");
+			console.log(encodedURL);
+			//var finishedWMSURLtest = encodeURI(strippedWMS + workspace + "/ows?service=wfs&version=1.1.0&request=getfeature&MAXFEATURES=1&typename=" + workspace+ ":" + layerName + "&PROPERTYNAME=,"+"&outputFormat=application/json");
 			//we MUST check if this layer can even support WFS before trying to get the attributes.
 			$.ajax({
-				url: finishedWMSURLtest,
+				url: encodedURL,
 				crossDomain: true,
 				success: checkWFSURLCompatibility,
 				error: function (jqXHR, tranStatus, errorThrown) {

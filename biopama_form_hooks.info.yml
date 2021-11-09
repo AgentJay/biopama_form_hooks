@@ -2,4 +2,4 @@ name: Biopama Form Hooks
 type: module
 description: 'This submits some of the forms without redirecting the user'
 package: BIOPAMA
-core: 8.x
+core_version_requirement: ^8.0  || ^9.0
